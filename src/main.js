@@ -17,7 +17,7 @@ const router = new VueRouter({
 router.map({
   '/foo': {
     component(resolve) { // 按需加载
-      require(['./components/foo/Foo'], resolve);
+      require(['./components/foo'], resolve);
     },
   },
   '/bar': {
