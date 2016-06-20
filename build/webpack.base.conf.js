@@ -14,6 +14,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.vue'],
+    // 如果一个模块在resolve.root or resolve.modulesDirectories中无法找到，可以到fallback中需找，
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {
       'src': path.resolve(__dirname, '../src'),
@@ -21,6 +22,7 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components')
     }
   },
+  // Like resolve but for loaders
   resolveLoader: {
     fallback: [path.join(__dirname, '../node_modules')]
   },

@@ -45,8 +45,11 @@ var webpackConfig = merge(baseWebpackConfig, {
     // 如果有多个入口文件，可以通过多次调用这个插件，生成不同的html文件，
     // 如果有需求，请查看官方文档。
     new HtmlWebpackPlugin({
+      staticFile: function (filePath) {
+        return baseWebpackConfig.output.publicPath + utils.assetsPath(filePath);
+      },
       filename: process.env.NODE_ENV === 'testing' ? 'index.html' : config.build.index, // 文件生成的目录
-      template: 'index.html',
+      template: 'index.ejs',
       inject: true,
       minify: {
         removeComments: true,
