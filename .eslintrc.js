@@ -1,17 +1,22 @@
 module.exports = {
   root: true,
-  extends: 'airbnb-base',
+  parser: 'babel-eslint',
+  parserOptions: {
+    sourceType: 'module'
+  },
+  // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
+  extends: 'standard',
   // required to lint *.vue files
   plugins: [
     'html'
   ],
   // add your custom rules here
   'rules': {
-    'import/no-unresolved': 0,
+    // allow paren-less arrow functions
+    'arrow-parens': 0,
+    // allow async-await
+    'generator-star-spacing': 0,
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'object-curly-spacing': 0, // { 内侧空格 }
-    'global-require': 0,
-    'react/jsx-space-before-closing': 0, // <FIcon /> 空格
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }
 }
