@@ -1,18 +1,16 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
-  </div>
+    <div id="app">
+        <hello></hello>
+    </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
-
+import Hello from './components/hello'
 export default {
-  name: 'app',
-  components: {
-    Hello
-  }
+    name: 'app',
+    components: {
+        Hello
+    }
 }
 </script>
 
@@ -25,4 +23,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+
+
+
+
 </style>
