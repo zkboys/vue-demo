@@ -1,6 +1,6 @@
 # vue-demo
 
-> A Vue.js project
+> vue2.0 项目 vue2.0 webpack vuex es6 vue-router
 
 ## Build Setup
 
