@@ -24,9 +24,11 @@ module.exports = {
       'js': 'never',
       'vue': 'never'
     }],
+    'import/no-dynamic-require': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     "indent": [2, 4],
+    "global-require": 0,
     "react/jsx-space-before-closing": 0, // <FIcon /> 空格
     "object-curly-spacing": 0, // { 内侧空格 }
   }
