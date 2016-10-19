@@ -1,6 +1,7 @@
 <template>
     <div class="login">
-        <lable>用户名：<input name="userName" value=""/></lable>
+        <h1>login</h1>
+        <label>用户名：<input name="userName" value=""/></label>
         <label>密码：<input type="password" name="password" value=""></label>
     </div>
 </template>
