@@ -1,3 +1,4 @@
+<style scoped lang="less" src="./style.less"></style>
 <template>
     <div class="hello">
         <img src="./logo.png">
@@ -21,5 +22,13 @@
     </div>
 </template>
 
-<script src="./script.js"></script>
-<style scoped lang="less" src="./style.less"></style>
+<script>
+export default {
+    name: 'hello',
+    data() {
+        return {
+            msg: 'Welcome to Your Vue.js App',
+        };
+    },
+};
+</script>

@@ -5,13 +5,15 @@
 </template>
 
 <script>
-import Hello from './components/hello'
+import Hello from './components/hello';
+
 export default {
     name: 'app',
     components: {
-        Hello
-    }
-}
+        Hello,
+    },
+};
+
 </script>
 
 <style>

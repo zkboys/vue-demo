@@ -35,7 +35,7 @@ test // 测试目录
 ## src/components约定
 开发主要关注的就是src/components目录，为了使项目做到后期不至于太过于混乱，开发过程中要遵循几个约定
 
-1. 所有的组件在src/components中新建一个文件夹，其中包括 `index.vue` `script.js` `style.less/style.css` 和其他文件（一般是图片）
+1. 所有的组件在src/components中新建一个文件夹，其中包括 `index.vue` `style.less/style.css` 和其他文件（一般是图片）
 1. `index.vue` 文件包括html模版，js的引入，less/css的引入
 1. 样式引入要加入`scoped`属性，防止各组件样式冲突：`<style scoped lang="less" src="./style.less"></style>`
 
