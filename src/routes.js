@@ -5,7 +5,6 @@ const Login = (resolve) => {
     // require.ensure 是 Webpack 的特殊语法，用来设置 code-split point
     // （代码分块）
     // 请求开始之前代码写到这里 console.log('start');
-    console.log(arguments);
     require.ensure([], () => {
         // 请求结束之后的代码写到这里 console.log('end');
         resolve(require('./components/login'));
