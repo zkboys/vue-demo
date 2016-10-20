@@ -39,6 +39,27 @@ test // 测试目录
 1. `index.vue` 文件包括html模版，js的引入，less/css的引入
 1. 样式引入要加入`scoped`属性，防止各组件样式冲突：`<style scoped lang="less" src="./style.less"></style>`
 
+## 主题
+项目支持主题功能，通过`src/themes/`目录下配置不同的`variables.less` 简单的实现主题功能
+
+实现原理：构建时，将制定的主题文件夹中的内容copy到current文件夹中，代码中引用的都是current文件夹中的`variables.less`。
+
+开发时可以通过配置环境变量THEME，来区分启用那个主题，其中THEME变量值为`src/themes/`对应的文件夹名称，默认`default`
+```bash
+$ THEME=red npm run dev
+```
+
+构建单个主题
+```bash
+$ THEME=red npm run build
+```
+
+构建全部主题，顺序构建所有的主题（性能不好，太慢了）
+```
+"build:all": "THEME=red npm run build && THEME=yellow npm run build ",
+```
+注：如果新增主题，需要修改`build:all`脚本
+
 
 ## 相关链接
 [guide](http://vuejs-templates.github.io/webpack/) 
