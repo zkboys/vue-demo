@@ -34,10 +34,10 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.js$^[routes.js]/,
+                test: /\.js$/,
                 loader: 'eslint',
                 include: projectRoot,
-                exclude: /node_modules/
+                exclude: [/node_modules/, /routes.js/]
             },
             {
                 test: /routes\.js$/,
