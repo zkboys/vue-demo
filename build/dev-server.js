@@ -14,6 +14,9 @@ var port = process.env.PORT || config.dev.port;
 // 设置皮肤
 require('./theme');
 
+// 生成路由
+require('./generate-routes.js');
+
 
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware

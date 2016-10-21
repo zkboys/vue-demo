@@ -60,6 +60,9 @@ $ THEME=red npm run build
 ```
 注：如果新增主题，需要修改`build:all`脚本
 
+## 路由
+各个模块下的路由，写在各自模块下，以`routes.js`文件命名，构建时，会通过`build/generate-routes.js` 自动生成`src/all-routes.js`文件，并使用`build/routes-loader.js` 简化写法
+
 
 ## 相关链接
 [guide](http://vuejs-templates.github.io/webpack/) 
@@ -72,4 +75,8 @@ $ THEME=red npm run build
 [vuex](http://vuex.vuejs.org/)
 [vue-loader](http://vue-loader.vuejs.org/)
 [awesome-vue](https://github.com/vuejs/awesome-vue)
+[chokidar-文件watch](https://github.com/paulmillr/chokidar)
 
+## TODO
+[ ] js 从vue分离出来，eslint 的 preLoader 不起作用，不从vue分离出来，IDE的eslint不起作用
+ 

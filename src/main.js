@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import routes from './routes';
+import routes from './all-routes';
 
 // This installs <router-view> and <router-link>,
 // and injects $router and $route to all router-enabled child components
