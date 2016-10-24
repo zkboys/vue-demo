@@ -1,13 +1,11 @@
 <template>
     <div class="hello">
         <img src="./logo.png">
+        <div>{{pendingMessage}}</div>
         <h2>hello.message from state: {{ hello.message }}</h2>
-        <h2>message from getters: {{message}}</h2>
-        <h2>{{helloMessage.message}}</h2>
-        <h2>{{good}}</h2>
         <h2>Essential Links</h2>
-        <button @click="changeHelloMessage(0)">改变信息11</button>
-        <button @click="changeHelloMessage(1)">改变信息22</button>
+        <button @click="changeMessage(0)">改变信息11</button>
+        <button @click="changeMessage(1)">改变信息22</button>
         <ul>
             <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
             <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
