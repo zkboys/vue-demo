@@ -1,6 +1,13 @@
 import * as _ from 'lodash';
 
-export default function handleMutation({pending, resolve, reject}) {
+export default function handleMutation({
+    pending = () => {
+    },
+    resolve = () => {
+    },
+    reject = () => {
+    },
+}) {
     return (state, action) => {
         const {meta = {}, error, payload} = action;
         const isPending = meta.sequence && meta.sequence.type === 'start';

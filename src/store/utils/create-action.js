@@ -9,7 +9,7 @@ export default function createAction(type, payloadCreator, metaCreator) {
         ? payloadCreator
         : _.identity;
 
-    const actionCreator = ({commit}, args) => {
+    const actionCreator = ({commit}, args = {}) => {
         const hasError = args instanceof Error;
 
         const action = {

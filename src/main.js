@@ -20,4 +20,7 @@ new Vue({
             <router-view class="main-view"></router-view>
         </div>
     `,
+    created() {
+        this.$store.dispatch('syncStateFromLocalStorage');
+    },
 }).$mount('#app');

@@ -12,6 +12,7 @@ export const changeHelloMessage = createAction(types.CHANGE_HELLO_MESSAGE,
         console.log(`metaCreator:${id}`);
         return {
             id,
+            sync: 'hello',
         };
     });
 /*

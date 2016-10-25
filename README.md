@@ -63,6 +63,76 @@ $ THEME=red npm run build
 ## 路由
 各个模块下的路由，写在各自模块下，以`routes.js`文件命名，构建时，会通过`build/generate-routes.js` 自动生成`src/all-routes.js`文件，并使用`build/routes-loader.js` 简化写法
 
+## action 
+自定义 `src/store/utils/create-action.js`方法，规范、简化action写法，实现方案参考的是[redux-acitions](https://github.com/acdlite/redux-actions),
+
+## modules
+主要针对异步，封装了`src/store/utils/handle-mutation.js`方法，具体用法如下:
+
+```js
+
+export default {
+    state: {
+        message: '初始化message',
+        pending: false,
+    },
+    mutations: {
+        [types.CHANGE_HELLO_MESSAGE]: handleMutation({
+            pending(state) {
+                state.pending = true;
+            },
+            resolve(state, payload) {
+                state.pending = false;
+                state.message = payload;
+            },
+            reject(state, error) {
+                state.pending = false;
+                state.message = `is a error ${error}`;
+            },
+        }),
+        ...
+    },
+};
+```
+
+## 本地存储
+将某次action涉及到的state存储到localStorage中，编写action时，在metaCreator中返回sync属性，属性值表示存储到localStorage的key：
+```js
+export const changeHelloMessage = createAction(types.CHANGE_HELLO_MESSAGE,
+    ({id}) => {
+        console.log(`payloadCreator:${id}`);
+        return helloService.getMessage(id);
+    },
+    ({id}) => {
+        console.log(`metaCreator:${id}`);
+        return {
+            id,
+            sync: 'hello', // 添加次属性，这次action涉及到的state将存储到localStorage中，key为 'hello'
+        };
+    });
+```
+将state从localStorage中同步到系统中
+`/actions/app.js` 中定义了 `syncStateFromLocalStorage` action，用于将localStorage中的state同步到项目中，默认的，项目启动时，会在`src/main.js`中触发一次`syncStateFromLocalStorage`,将所有的state同步
+
+如果需要单独同步具体的state，可以单独触发`syncStateFromLocalStorage`action，详见`/actions/app.js`中的实现
+从localStorage中同步state，需要具体的modules支持：
+```
+
+export default {
+    state: {
+        message: '初始化message',
+        pending: false,
+    },
+    mutations: {
+        ...
+        [types.SYNC_STATE_FROM_STORAGE](state, action) { // 这个type的action 由`/actions/app.js` 中的 `syncStateFromLocalStorage`触发
+            const {payload} = action;
+            state.message = payload.hello.message;
+        },
+    },
+};
+```
+
 
 ## 相关链接
 [guide](http://vuejs-templates.github.io/webpack/) 
