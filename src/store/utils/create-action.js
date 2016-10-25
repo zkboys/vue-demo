@@ -9,7 +9,7 @@ export default function createAction(type, payloadCreator, metaCreator) {
         ? payloadCreator
         : _.identity;
 
-    const actionCreator = ({commit}, args = {}) => {
+    const actionCreator = ({commit}, args) => {
         const hasError = args instanceof Error;
 
         const action = {
@@ -29,7 +29,9 @@ export default function createAction(type, payloadCreator, metaCreator) {
         if (typeof metaCreator === 'function') {
             action.meta = metaCreator(args);
         }
-
+        if (!args) {
+            args = {};
+        }
         // 异步处理
         const callBacks = {
             resolve: args.resolve,

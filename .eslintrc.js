@@ -40,5 +40,6 @@ module.exports = {
         "global-require": 0,
         "react/jsx-space-before-closing": 0, // <FIcon /> 空格
         "object-curly-spacing": 0, // { 内侧空格 }
+        'new-cap': 0,
     }
 }

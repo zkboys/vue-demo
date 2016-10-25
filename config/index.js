@@ -1,6 +1,11 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
 
+var proxyTables = {
+  // '/api/organization/users': 'http://localhost:3001', // 开发过程中，可以代理具体的url到后端开发机器上。
+  // '/api/**': 'http://localhost:3001',
+  '/api/**': 'http://wangshubin.com', // 要设置 options.changeOrigin = true;
+};
 module.exports = {
   build: {
     env: require('./prod.env'),
@@ -23,7 +28,7 @@ module.exports = {
     theme: 'default',
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: proxyTables,
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

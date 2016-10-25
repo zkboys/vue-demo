@@ -15,7 +15,6 @@ export default function handleMutation({
             pending(state, action);
         } else if (error) {
             reject(state, payload, action);
-            // todo 全局处理失败信息
             if (meta.reject && _.isFunction(meta.reject)) {
                 meta.reject(payload);
             }

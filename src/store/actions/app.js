@@ -15,5 +15,5 @@ export const syncStateFromLocalStorage = createAction(types.SYNC_STATE_FROM_STOR
     if (!multiKeys) {
         multiKeys = allKeys;
     }
-    storage.multiGet(multiKeys);
+    return storage.multiGet(multiKeys);
 });

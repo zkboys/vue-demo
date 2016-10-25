@@ -6,7 +6,7 @@ import createAction from '../utils/create-action';
 export const changeHelloMessage = createAction(types.CHANGE_HELLO_MESSAGE,
     ({id}) => {
         console.log(`payloadCreator:${id}`);
-        return helloService.getMessage(id);
+        return helloService.getUsers();
     },
     ({id}) => {
         console.log(`metaCreator:${id}`);
