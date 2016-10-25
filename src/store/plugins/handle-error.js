@@ -2,13 +2,17 @@ import {Toast} from 'mint-ui';
 
 export default function createHandleError() {
     return (store) => {
-        // called when the store is initialized
+        // store 初始化时，就会调用subscribe，subscribe中的代码，会再没一个mutations触发之后被调用
         store.subscribe((mutation) => {
+            // error 为true/false payload在error === true时，存储的是error对象
             const {error, payload} = mutation.payload;
-            // todo 根据payload（error）类型，处理错误信息
             if (error) {
+                let message = payload.toString();
+                if (payload.body) {
+                    message = payload.body;
+                }
                 Toast({
-                    message: payload.toString(),
+                    message,
                     duration: 3000,
                 });
             }

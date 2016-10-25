@@ -28,29 +28,24 @@ function filterStatus(res) {
     const statusText = res.statusText;
 
     if (status >= 200 && status < 300) {
-        return res;
+        return res.json();
     }
 
     if (status === 401) {
+        // TODO 需要登录
         window.location.href = config.signInPath;
     }
-
-    return res.json().then((body) => {
+    return res.json().catch((body) => {
         const error = new Error(statusText);
         error.body = body;
         error.type = 'http';
         error.status = status;
+        // TODO 各种请求相关的错误，可以在这里扩展
+        if (status === 500) {
+            error.body = '未知服务器错误';
+        }
         throw error;
     });
-}
-
-/**
- * 处理返回的结果，
- * @param res
- * @returns promise
- */
-function filterJSON(res) {
-    return res.json(); // res.json() 是一个promise
 }
 
 
@@ -81,31 +76,27 @@ export function get(url, params) {
         options.credentials = 'same-origin';// 携带cookie，否则前后端分离开发，无法请求后端数据。
     }
     return fetch(url, options)
-        .then(filterStatus)
-        .then(filterJSON);
+        .then(filterStatus);
 }
 
 export function post(url, body) {
     body = filterParams(body);
     url = urlPrefix + url;
     return fetch(url, getOptions('POST', body))
-        .then(filterStatus)
-        .then(filterJSON);
+        .then(filterStatus);
 }
 
 export function put(url, body) {
     body = filterParams(body);
     url = urlPrefix + url;
     return fetch(url, getOptions('PUT', body))
-        .then(filterStatus)
-        .then(filterJSON);
+        .then(filterStatus);
 }
 
 export function del(url, body) {
     body = filterParams(body);
     url = urlPrefix + url;
     return fetch(url, getOptions('DELETE', body))
-        .then(filterStatus)
-        .then(filterJSON);
+        .then(filterStatus);
 }
 

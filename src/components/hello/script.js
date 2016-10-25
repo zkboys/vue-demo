@@ -15,15 +15,11 @@ export default {
             'changeHelloMessage',
         ]),
         changeMessage(id) {
-            const vm = this;
             this.changeHelloMessage({
                 id,
                 resolve() {
-                    console.log(`resolve callback from components ${id}`);
-                    console.log(vm.hello.message);
                 },
                 reject() {
-                    console.log(`reject callback from components ${id}`);
                 },
             });
         },

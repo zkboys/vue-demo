@@ -17,7 +17,7 @@ export default {
             },
             reject(state, error) {
                 state.pending = false;
-                state.message = `is a error ${error}`;
+                state.message = `is a error ${error.body}`;
             },
         }),
         [types.SYNC_STATE_FROM_STORAGE](state, action) {

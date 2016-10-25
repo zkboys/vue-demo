@@ -4,17 +4,11 @@ import createAction from '../utils/create-action';
 
 
 export const changeHelloMessage = createAction(types.CHANGE_HELLO_MESSAGE,
-    ({id}) => {
-        console.log(`payloadCreator:${id}`);
-        return helloService.getUsers();
-    },
-    ({id}) => {
-        console.log(`metaCreator:${id}`);
-        return {
-            id,
-            sync: 'hello',
-        };
-    });
+    ({id}) => helloService.getUsers(id),
+    ({id}) => ({
+        id,
+        sync: 'hello',
+    }));
 /*
  export const changeHelloMessage = ({commit}, payload) => {
  const id = payload.id;
