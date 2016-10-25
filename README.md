@@ -133,6 +133,9 @@ export default {
 };
 ```
 
+## 异常处理
+系统通过`src/store/plugins/handle-error.js`处理系统异常，主要是异步产生的异常。
+
 
 ## 相关链接
 [guide](http://vuejs-templates.github.io/webpack/) 

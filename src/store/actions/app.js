@@ -12,7 +12,7 @@ export const syncStateFromLocalStorage = createAction(types.SYNC_STATE_FROM_STOR
     } else {
         multiKeys = keys;
     }
-    if (!multiKeys) {
+    if (!multiKeys || !_.isArray(multiKeys)) {
         multiKeys = allKeys;
     }
     return storage.multiGet(multiKeys);
