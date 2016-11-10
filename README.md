@@ -66,6 +66,11 @@ $ THEME=red npm run build
 ## action 
 自定义 `src/store/utils/create-action.js`方法，规范、简化action写法，实现方案参考的是[redux-acitions](https://github.com/acdlite/redux-actions),
 
+### meta中约定的配置
+1. sybc
+1. autoShowError
+1. autoShowPending 
+
 ## modules
 主要针对异步，封装了`src/store/utils/handle-mutation.js`方法，具体用法如下:
 
@@ -135,6 +140,12 @@ export default {
 
 ## 异常处理
 系统通过`src/store/plugins/handle-error.js`处理系统异常，主要是异步产生的异常。
+
+## 系统中的常量`src/constants`
+1. local-item-keys.js // 要同步到localStorage中的数据的key，一般给meta.sync赋值，只看这个文件，就知道有哪些state同步到localStorage中。
+1. mutation-types.js // 系统中所有的action type，语义化命名，只看这个文件，就知道系统中有哪些action
+1. url.js // 系统中所有异步请求的url，以`_URL`结尾，便于跟action进行区分，统一设置成常量，只看这个文件，就知道系统中有哪些请求，便于后期查看，维护,
+
 
 
 ## 相关链接

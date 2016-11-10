@@ -1,5 +1,6 @@
 // app
 export const SYNC_STATE_FROM_STORAGE = 'SYNC_STATE_FROM_STORAGE';
 
-
+// hello
+export const GET_USER = 'GET_USER';
 export const CHANGE_HELLO_MESSAGE = 'CHANGE_HELLO_MESSAGE';

@@ -1,4 +1,4 @@
-import * as storage from '../../common/storage';
+import {local} from '../../common/storage';
 
 export default function createSyncState() {
     return (store) => {
@@ -8,7 +8,7 @@ export default function createSyncState() {
             const pending = meta.sequence && meta.sequence.type === 'start';
             if (!pending && !error) {
                 const itemName = meta.sync;
-                storage.setItem(itemName, state[itemName]);
+                local.setItem(itemName, state[itemName]);
             }
         });
     };
