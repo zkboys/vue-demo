@@ -67,7 +67,6 @@ $ THEME=red npm run build
 自定义 `src/store/utils/create-action.js`方法，规范、简化action写法，实现方案参考的是[redux-acitions](https://github.com/acdlite/redux-actions),
 
 ### meta中约定的配置
-1. sybc
 1. autoShowError
 1. autoShowPending 
 
@@ -101,20 +100,32 @@ export default {
 ```
 
 ## 本地存储
-将某次action涉及到的state存储到localStorage中，编写action时，在metaCreator中返回sync属性，属性值表示存储到localStorage的key：
+将module中某些state存入localStorage中，需要在module中添加syncToLocal配置
+将localStorage中的数据同步回store中，需要在具体的module中编写 types.SYNC_STATE_FROM_STORAGE mutation
 ```js
-export const changeHelloMessage = createAction(types.CHANGE_HELLO_MESSAGE,
-    ({id}) => {
-        console.log(`payloadCreator:${id}`);
-        return helloService.getMessage(id);
+......
+
+export default {
+    syncToLocal: {
+        message: true,
     },
-    ({id}) => {
-        console.log(`metaCreator:${id}`);
-        return {
-            id,
-            sync: 'hello', // 添加次属性，这次action涉及到的state将存储到localStorage中，key为 'hello'
-        };
-    });
+    state: {
+        message: '初始化message',
+        pending: false,
+    },
+    mutations: {
+        
+        ......
+        
+        [types.SYNC_STATE_FROM_STORAGE](state, action) {
+            const {payload} = action;
+            if (payload.hello && payload.hello.message) {
+                state.message = payload.hello.message;
+            }
+        },
+    },
+};
+
 ```
 将state从localStorage中同步到系统中
 `/actions/app.js` 中定义了 `syncStateFromLocalStorage` action，用于将localStorage中的state同步到项目中，默认的，项目启动时，会在`src/main.js`中触发一次`syncStateFromLocalStorage`,将所有的state同步

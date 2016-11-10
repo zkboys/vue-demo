@@ -2,19 +2,31 @@ import * as _ from 'lodash';
 import * as types from '../../constants/mutation-types';
 import createAction from '../utils/create-action';
 import {local} from '../../common/storage';
-import localItemKeys from '../../constants/local-item-keys';
+import modules from '../modules/index';
+import {LOCAL_KEY_PREFIX} from '../../constants/constants';
 
-// 进入系统时，要从localStorage中同步哪些state到项目中，需要在这里指定
+// 从localStorage中同步state到项目中
 export const syncStateFromLocalStorage = createAction(types.SYNC_STATE_FROM_STORAGE, (keys) => {
-    const allKeys = Object.keys(localItemKeys).map(key => localItemKeys[key]);
     let multiKeys = [];
+
     if (_.isString(keys)) {
         multiKeys.push(keys);
-    } else {
+    } else if (_.isArray(keys)) {
         multiKeys = keys;
+    } else {
+        for (const moduleName of Object.keys(modules)) {
+            const {syncToLocal} = modules[moduleName];
+            if (syncToLocal) {
+                multiKeys.push(moduleName);
+            }
+        }
     }
-    if (!multiKeys || !_.isArray(multiKeys)) {
-        multiKeys = allKeys;
-    }
-    return local.multiGet(multiKeys);
+    multiKeys = multiKeys.map(key => LOCAL_KEY_PREFIX + key);
+    const localValues = local.multiGet(multiKeys);
+    const result = {};
+    Object.keys(localValues).forEach((key) => {
+        const newKey = key.replace(LOCAL_KEY_PREFIX, '');
+        result[newKey] = localValues[key];
+    });
+    return result;
 });

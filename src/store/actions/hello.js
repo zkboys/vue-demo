@@ -1,5 +1,4 @@
 import createAction from '../utils/create-action';
-import localItemKeys from '../../constants/local-item-keys';
 import * as request from '../utils/request';
 import {
     CHANGE_HELLO_MESSAGE,
@@ -26,13 +25,11 @@ export const changeHelloMessage = createAction(CHANGE_HELLO_MESSAGE,
     },
     ({id}) => ({
         id,
-        sync: localItemKeys.hello,
     }));
 
 export const getUser = createAction(GET_USER,
     ({id}) => request.post(GET_USER_URL.replace('{id}', id), {name: 111, pass: 111}),
     () => ({
-        sync: localItemKeys.user,
         autoShowError: true,
         autoShowPending: true,
     })
