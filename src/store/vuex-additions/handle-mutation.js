@@ -19,14 +19,14 @@ export default function handleMutation({
         if (isPending) {
             pending(state, action);
         } else if (error) {
-            reject(state, payload, action);
+            reject(state, action);
             complete(state, action);
 
             if (meta.reject && typeof meta.reject === 'function') {
                 meta.reject(payload);
             }
         } else {
-            resolve(state, payload, action);
+            resolve(state, action);
             complete(state, action);
 
             if (meta.resolve && typeof meta.resolve === 'function') {
