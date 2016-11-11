@@ -1,4 +1,7 @@
+import Vue from 'vue';
 import {mapState, mapActions} from 'vuex';
+
+import ADiv from './a-div';
 
 export default {
     name: 'hello',
@@ -20,6 +23,16 @@ export default {
                 reject() {
                 },
             });
+        },
+        showADiv() {
+            console.log(ADiv);
+            const aDivConstructor = Vue.extend(ADiv);
+            // render off-document
+            const instance = new aDivConstructor({
+                el: document.createElement('div'),
+            });
+            // append to dom and show it
+            document.body.appendChild(instance.$el);
         },
     },
 };
