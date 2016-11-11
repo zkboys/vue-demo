@@ -1,5 +1,5 @@
 import * as types from '../../constants/mutation-types';
-import handleMutation from '../utils/handle-mutation';
+import {handleMutation} from '../vuex-additions/index';
 
 export default {
     syncToLocal: {

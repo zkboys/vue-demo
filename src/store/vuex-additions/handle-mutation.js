@@ -1,6 +1,3 @@
-import * as _ from 'lodash';
-import {Indicator} from 'mint-ui';
-
 export default function handleMutation({
     always = () => {
     },
@@ -16,32 +13,23 @@ export default function handleMutation({
     return (state, action) => {
         const {meta = {}, error, payload} = action;
         const isPending = meta.sequence && meta.sequence.type === 'start';
-        const {autoShowPending = true} = meta;
 
         always(state, action);
 
         if (isPending) {
-            if (autoShowPending) {
-                Indicator.open();
-            }
-
             pending(state, action);
         } else if (error) {
-            Indicator.close();
-
             reject(state, payload, action);
             complete(state, action);
 
-            if (meta.reject && _.isFunction(meta.reject)) {
+            if (meta.reject && typeof meta.reject === 'function') {
                 meta.reject(payload);
             }
         } else {
-            Indicator.close();
-
             resolve(state, payload, action);
             complete(state, action);
 
-            if (meta.resolve && _.isFunction(meta.resolve)) {
+            if (meta.resolve && typeof meta.resolve === 'function') {
                 meta.resolve(payload);
             }
         }

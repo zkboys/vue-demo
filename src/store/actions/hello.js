@@ -1,4 +1,4 @@
-import createAction from '../utils/create-action';
+import {createAction} from '../vuex-additions/index';
 import * as request from '../utils/request';
 import {
     CHANGE_HELLO_MESSAGE,

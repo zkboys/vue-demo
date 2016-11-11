@@ -1,13 +1,21 @@
-import * as _ from 'lodash';
-
 function isPromise(val) {
     return val && typeof val.then === 'function';
+}
+
+function identity(value) {
+    return value;
+}
+
+let idCounter = 0;
+function uniqueId() {
+    idCounter += 1;
+    return String(idCounter);
 }
 
 export default function createAction(type, payloadCreator, metaCreator) {
     const finalPayloadCreator = typeof payloadCreator === 'function'
         ? payloadCreator
-        : _.identity;
+        : identity;
 
     const actionCreator = ({commit}, args) => {
         const hasError = args instanceof Error;
@@ -28,7 +36,7 @@ export default function createAction(type, payloadCreator, metaCreator) {
 
         if (typeof metaCreator === 'function') {
             action.meta = metaCreator(args);
-        } else if (_.isPlainObject(metaCreator)) {
+        } else if (typeof metaCreator === 'object') {
             action.meta = metaCreator;
         }
 
@@ -44,7 +52,7 @@ export default function createAction(type, payloadCreator, metaCreator) {
             resolve: args.resolve,
             reject: args.reject,
         };
-        const id = _.uniqueId();
+        const id = uniqueId();
 
         if (isPromise(payload)) {
             action.meta.sequence = {

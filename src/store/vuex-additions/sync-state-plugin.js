@@ -29,10 +29,10 @@ function filterObjectByObject(originObj, mapObj, result = {}) {
  */
 export default function createSyncState({syncAction, keyPrefix = 'state-sync-local-', modules, setItem}) {
     return (store) => {
-        // called when the store is initialized
         store.subscribe((mutation, state) => {
             const {error, meta = {}} = mutation.payload;
             const pending = meta.sequence && meta.sequence.type === 'start';
+
             if (!pending && !error && mutation.type !== syncAction) {
                 for (const moduleName of Object.keys(modules)) {
                     const {syncToLocal} = modules[moduleName];

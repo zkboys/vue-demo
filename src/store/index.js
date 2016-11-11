@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import {Toast, Indicator} from 'mint-ui';
 import createLogger from 'vuex/dist/logger';
-import createSyncState from './plugins/sync-state-to-local-storage';
-import createHandleError from './plugins/handle-error';
+import {createSyncState, createHandleError, createHandlePending} from './vuex-additions/index';
 import actions from './actions';
 import getters from './getters';
 import modules from './modules';
@@ -22,8 +22,29 @@ const syncStateOptions = {
     modules,
     setItem: local.setItem,
 };
+const handleErrorOptions = {
+    errorCallBack(message) {
+        Toast({
+            message,
+            duration: 3000,
+        });
+    },
+};
 
-const plugins = [createSyncState(syncStateOptions), createHandleError()];
+const handlePendingOptions = {
+    pendingCallBack() {
+        Indicator.open();
+    },
+    pendingOverCallBack() {
+        Indicator.close();
+    },
+};
+
+const plugins = [
+    createSyncState(syncStateOptions),
+    createHandleError(handleErrorOptions),
+    createHandlePending(handlePendingOptions),
+];
 if (debug) {
     plugins.push(createLogger({}));
 }

@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as types from '../../constants/mutation-types';
-import createAction from '../utils/create-action';
+import {createAction} from '../vuex-additions/index';
 import {local} from '../../common/storage';
 import modules from '../modules/index';
 import {LOCAL_KEY_PREFIX} from '../../constants/constants';
