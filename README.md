@@ -28,7 +28,7 @@ npm test
 build // 构建相关，开发一般不需要关注
 config // 项目的配置，build所用到，开发一般不用关注
 src // 项目代码目录，开发主要关心目录
-static // 手动引入，非npm安装的静态文件
+static // 手动引入，非npm安装的静态文件，不通过webpack打包的文件（与项目不存在引用关系，不会被webpack打包）
 test // 测试目录
 ```
 
@@ -40,10 +40,9 @@ test // 测试目录
 1. 样式引入要加入`scoped`属性，防止各组件样式冲突：`<style scoped lang="less" src="./style.less"></style>`
 
 ## 主题
-项目支持主题功能，通过`src/themes/`目录下配置不同的`variables.less` 简单的实现主题功能
-
-实现原理：构建时，将制定的主题文件夹中的内容copy到current文件夹中，代码中引用的都是current文件夹中的`variables.less`。
-
+项目支持主题功能，通过`src/themes/`目录下配置不同的`variables.less` 简单的实现主题功能；
+实现原理：构建时，将制定的主题文件夹中的内容copy到current文件夹中，代码中引用的都是current文件夹中的`variables.less`；
+例如`hello/style.less`中：`@import '../../themes/current/variables.less';`
 开发时可以通过配置环境变量THEME，来区分启用那个主题，其中THEME变量值为`src/themes/`对应的文件夹名称，默认`default`
 ```bash
 $ THEME=red npm run dev
@@ -58,40 +57,108 @@ $ THEME=red npm run build
 ```
 "build:all": "THEME=red npm run build && THEME=yellow npm run build ",
 ```
-注：如果新增主题，需要修改`build:all`脚本
+注：如果新增主题，需要修改`build:all`脚本；`themes/current`文件夹为动态创建的，不要直接修改current中的内容
 
 ## 路由
-各个模块下的路由，写在各自模块下，以`routes.js`文件命名，构建时，会通过`build/generate-routes.js` 自动生成`src/all-routes.js`文件，并使用`build/routes-loader.js` 简化写法
+各个模块下的路由，写在各自模块下，以`routes.js`文件命名；
+构建时，会通过`build/generate-routes.js` 自动生成`src/all-routes.js`文件；
+并使用`build/routes-loader.js` 简化异步组件写法：
+```
+/*
+ * 自定义路由loader
+ * asyncComponent: './index.vue',
+ * ===>
+ * component: (resolve) => {
+ *      require.ensure([], () => {
+ *          resolve(require('./index.vue'));
+ *      });
+ * },
+ * */
+```
 
-## action 
-自定义 `src/store/utils/create-action.js`方法，规范、简化action写法，实现方案参考的是[redux-acitions](https://github.com/acdlite/redux-actions),
+## vuex-additions
+基于Flux Standard Action，自定义了一些方法，对原生vuex进行了一些封装，简化开发；
+
+### action 
+自定义 `src/store/vuex-additions/create-action.js`方法，规范、简化action写法，实现方案参考的是[redux-acitions](https://github.com/acdlite/redux-actions),
+`createAction`方法接收3个参数：type, payloadCreator, metaCreator
+
+- type: string
+- payloadCreator: function | payload 
+- metaCreator: function | object 
+
+demo：
+```
+import {createAction} from '../vuex-additions/index';
+
+import {
+    CHANGE_HELLO_MESSAGE,
+    GET_USER,
+} from '../../constants/mutation-types';
+
+
+export const getUser = createAction(GET_USER); // 调用此action时，传入的参数，直接作为payload
+
+export const getUser = createAction(GET_USER, 
+    ({id}) => id ++ // payloadCreator返回值，作为payload
+); 
+
+// payloadCreator 为函数，返回promise作为payload
+// metaCreator 为函数，返回的数据作为meta
+export const getUser = createAction(GET_USER,
+    ({id}) => request.post(GET_USER_URL.replace('{id}', id), {name: 111, pass: 111}), 
+    () => ({
+        autoShowError: true,
+        autoShowPending: true,
+    })
+);
+
+// payloadCreator 为函数，返回promise作为payload
+// metaCreator 为对象，直接将metaCreator作为meta
+export const getUser = createAction(GET_USER,
+    ({id}) => request.post(GET_USER_URL.replace('{id}', id), {name: 111, pass: 111}), 
+    {
+        autoShowError: true, 
+        autoShowPending: true, 
+    }
+);
+```
 
 ### meta中约定的配置
-1. autoShowError
-1. autoShowPending 
+1. autoShowError: 是否自动显示错误信息 handle-error-plugin.js 中会用到
+1. autoShowPending: 是否自动显示loading handle-pending-plugin.js 中会用到
 
-## modules
-主要针对异步，封装了`src/store/utils/handle-mutation.js`方法，具体用法如下:
-
+### modules
+主要针对异步，封装了`src/store/vuex-additions/handle-mutation.js`方法，具体用法如下:
+会根据`createAction`中设置的meta（用来标记异步状态），区分异步状态；
+自定义`syncToLocal` 属性，用来标记当前module中那些state同步存储到localStorage中，这个属性`sync-state-plugin.js`会用到；
 ```js
 
 export default {
+    syncToLocal: {
+        message: true,
+    },
     state: {
         message: '初始化message',
         pending: false,
     },
     mutations: {
         [types.CHANGE_HELLO_MESSAGE]: handleMutation({
-            pending(state) {
+            always(/* state, action */) { // 总会 pending resolve reject之前被调用，可以做一些共同的处理
+            },
+            pending(state, /* action */) {
                 state.pending = true;
             },
-            resolve(state, payload) {
-                state.pending = false;
+            resolve(state, action) {
+                const {payload} = action;
                 state.message = payload;
             },
-            reject(state, error) {
+            reject(state, action) {
+                const {payload} = action;
+                state.message = `is a error ${payload.body}`;
+            },
+            complete(state, /* action */) { // 在 resolve 或 reject 之后被调用，可以做一些共同的处理
                 state.pending = false;
-                state.message = `is a error ${error}`;
             },
         }),
         ...
@@ -150,27 +217,26 @@ export default {
 ```
 
 ## 异常处理
-系统通过`src/store/plugins/handle-error.js`处理系统异常，主要是异步产生的异常。
+系统通过`src/vuex-additions/handle-error-plugin.js`处理系统异常，主要是异步产生的异常。
 
 ## 系统中的常量`src/constants`
-1. local-item-keys.js // 要同步到localStorage中的数据的key，一般给meta.sync赋值，只看这个文件，就知道有哪些state同步到localStorage中。
 1. mutation-types.js // 系统中所有的action type，语义化命名，只看这个文件，就知道系统中有哪些action
 1. url.js // 系统中所有异步请求的url，以`_URL`结尾，便于跟action进行区分，统一设置成常量，只看这个文件，就知道系统中有哪些请求，便于后期查看，维护,
 
 
 
 ## 相关链接
-[guide](http://vuejs-templates.github.io/webpack/) 
-[docs for vue-loader](http://vuejs.github.io/vue-loader)
-[vue](https://vuejs.org)
-[forum](https://forum.vuejs.org)
-[Gitter Chat](https://gitter.im/vuejs/vue)
-[vue Twitter](https://twitter.com/vuejs)
-[vue-router](http://router.vuejs.org/)
-[vuex](http://vuex.vuejs.org/)
-[vue-loader](http://vue-loader.vuejs.org/)
-[awesome-vue](https://github.com/vuejs/awesome-vue)
-[chokidar-文件watch](https://github.com/paulmillr/chokidar)
+1. [guide](http://vuejs-templates.github.io/webpack/) 
+1. [docs for vue-loader](http://vuejs.github.io/vue-loader)
+1. [vue](https://vuejs.org)
+1. [forum](https://forum.vuejs.org)
+1. [Gitter Chat](https://gitter.im/vuejs/vue)
+1. [vue Twitter](https://twitter.com/vuejs)
+1. [vue-router](http://router.vuejs.org/)
+1. [vuex](http://vuex.vuejs.org/)
+1. [vue-loader](http://vue-loader.vuejs.org/)
+1. [awesome-vue](https://github.com/vuejs/awesome-vue)
+1. [chokidar-文件watch](https://github.com/paulmillr/chokidar)
 
 ## TODO
 [ ] js 从vue分离出来，eslint 的 preLoader 不起作用，不从vue分离出来，IDE的eslint不起作用
