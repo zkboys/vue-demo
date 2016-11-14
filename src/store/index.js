@@ -30,7 +30,6 @@ const handleErrorOptions = {
         });
     },
 };
-
 const handlePendingOptions = {
     pendingCallBack() {
         Indicator.open();

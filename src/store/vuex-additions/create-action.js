@@ -47,7 +47,7 @@ export default function createAction(type, payloadCreator, metaCreator) {
         if (!args) {
             args = {};
         }
-        // 异步处理
+
         const callBacks = {
             resolve: args.resolve,
             reject: args.reject,
@@ -60,7 +60,7 @@ export default function createAction(type, payloadCreator, metaCreator) {
                 id,
             };
             commit(action);
-            payload.then( // 异步结束时，再次调用reducer，分为成功或失败
+            payload.then( // 异步结束时，再次调用commit，分为成功或失败
                 result => commit(type, {
                     ...action,
                     payload: result,

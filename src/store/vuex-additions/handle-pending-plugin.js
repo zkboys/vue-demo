@@ -10,11 +10,14 @@ export default function createHandlePending(options) {
         store.subscribe((mutation) => {
             const {meta = {}} = mutation.payload;
             const isPending = meta.sequence && meta.sequence.type === 'start';
+            const isPendingOver = meta.sequence && meta.sequence.type === 'next';
             const {autoShowPending = true} = meta;
+
             if (autoShowPending) {
                 if (isPending) {
                     pendingCallBack(mutation);
-                } else {
+                }
+                if (isPendingOver) {
                     pendingOverCallBack(mutation);
                 }
             }
