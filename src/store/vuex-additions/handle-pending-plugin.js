@@ -1,3 +1,5 @@
+let pendingCount = 0; // 多个请求同时发起时，防止重复显示loading，防止loading提前被清除
+
 export default function createHandlePending(options) {
     const {
         pendingCallBack = () => {
@@ -12,13 +14,18 @@ export default function createHandlePending(options) {
             const isPending = meta.sequence && meta.sequence.type === 'start';
             const isPendingOver = meta.sequence && meta.sequence.type === 'next';
             const {autoShowPending = true} = meta;
-
             if (autoShowPending) {
                 if (isPending) {
-                    pendingCallBack(mutation);
+                    if (pendingCount === 0) {
+                        pendingCallBack(mutation);
+                    }
+                    pendingCount += 1;
                 }
                 if (isPendingOver) {
-                    pendingOverCallBack(mutation);
+                    pendingCount -= 1;
+                    if (pendingCount === 0) {
+                        pendingOverCallBack(mutation);
+                    }
                 }
             }
         });
