@@ -3,8 +3,6 @@ import Vuex from 'vuex';
 import {Toast, Indicator} from 'mint-ui';
 import createLogger from 'vuex/dist/logger';
 import {createSyncState, createHandleError, createHandlePending} from './vuex-additions/index';
-import actions from './actions';
-import getters from './getters';
 import modules from './modules';
 
 import {local} from '../common/storage';
@@ -49,8 +47,6 @@ if (debug) {
 }
 
 export default new Vuex.Store({
-    actions,
-    getters,
     modules,
     strict: debug,
     plugins,

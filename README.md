@@ -223,7 +223,22 @@ export default {
 1. mutation-types.js // 系统中所有的action type，语义化命名，只看这个文件，就知道系统中有哪些action
 1. url.js // 系统中所有异步请求的url，以`_URL`结尾，便于跟action进行区分，统一设置成常量，只看这个文件，就知道系统中有哪些请求，便于后期查看，维护,
 
+## 系统事件总线
 
+```js
+// 非父子关系组件间通信
+var bus = new Vue()
+// in component A's method
+bus.$emit('id-selected', 1)
+// in component B's created hook
+bus.$on('id-selected', function (id) {
+  // ...
+})
+
+// 项目中使用mixins方式，全局给vue添加了data  eventBus，使用方法如下：
+this.$eventBus.$emit(...);
+this.$eventBus.$on(...);
+```
 
 ## 相关链接
 1. [guide](http://vuejs-templates.github.io/webpack/) 

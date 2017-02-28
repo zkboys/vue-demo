@@ -1,7 +1,7 @@
 var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
-var config = require('../config')
+var config = require('./config')
 var opn = require('opn')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = process.env.NODE_ENV === 'testing'
@@ -71,7 +71,20 @@ module.exports = app.listen(port, function (err) {
         console.log(err)
         return
     }
-    var uri = 'http://localhost:' + port
+    var uri = 'http://' + getIPAddress() + ':' + port + '\n          or ' + 'http://localhost:' + port;
     console.log('Listening at ' + uri + '\n')
     // opn(uri) // 打开浏览器
 })
+
+function getIPAddress() {
+    var interfaces = require('os').networkInterfaces();
+    for (var devName in interfaces) {
+        var iface = interfaces[devName];
+        for (var i = 0; i < iface.length; i++) {
+            var alias = iface[i];
+            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+                return alias.address;
+            }
+        }
+    }
+}

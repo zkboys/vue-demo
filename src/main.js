@@ -16,6 +16,13 @@ const router = new VueRouter({
     routes,
 });
 
+// 全局eventBus，类似发布订阅，实现跨组件通信，实例中使用方法如下：
+// https://vuejs.org/v2/guide/components.html#Non-Parent-Child-Communication
+// this.$eventBus.$emit('id-selected', 1);
+// this.$eventBus.$on('id-selected', id => console.log(id));
+// Vue.use(v => (v.prototype.$eventBus = new v())); // 插件方式
+Vue.prototype.$eventBus = new Vue(); // 直接扩展
+
 new Vue({
     router,
     store,

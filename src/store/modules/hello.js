@@ -1,5 +1,9 @@
 import * as types from '../../constants/mutation-types';
-import {handleMutation} from '../vuex-additions/index';
+import {createAction, handleMutation} from '../vuex-additions/index';
+import * as request from '../utils/request';
+import {
+    GET_USER_URL,
+} from '../../constants/url';
 
 export default {
     syncToLocal: {
@@ -8,6 +12,33 @@ export default {
     state: {
         message: '初始化message',
         pending: false,
+    },
+    actions: {
+        changeHelloMessage: createAction(types.CHANGE_HELLO_MESSAGE,
+            ({id}) => {
+                const messages = ['我是信息1，我来自action', 'I am message 2, I come from action'];
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        if (id) {
+                            resolve(messages[id]);
+                        } else {
+                            // throw Error('我自己抛出的错误');
+                            reject(Error('获取信息出错了'));
+                        }
+                    }, 500);
+                });
+            },
+            ({id}) => ({
+                id,
+            })),
+
+        getUser: createAction(types.GET_USER,
+            ({id}) => request.post(GET_USER_URL.replace('{id}', id), {name: 111, pass: 111}),
+            () => ({
+                autoShowError: true,
+                autoShowPending: true,
+            })
+        ),
     },
     mutations: {
         [types.CHANGE_HELLO_MESSAGE]: handleMutation({

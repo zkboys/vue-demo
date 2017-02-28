@@ -1,5 +1,5 @@
 var path = require('path')
-var config = require('../config')
+var config = require('./config')
 var copy = require('copy');
 var themeName = process.env.THEME || config.dev.theme || 'default';
 var toPath = path.join(__dirname, '../src/themes/current');
