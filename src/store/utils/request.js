@@ -5,6 +5,8 @@ import config from '../../configs';
 const urlPrefix = config.apiPath;
 const debug = process.env.NODE_ENV !== 'production';
 
+// TODO: 请求有时间重构成vue全家桶推荐的axios https://github.com/mzabriskie/axios
+
 /**
  * 统一处理请求参数
  * @param params

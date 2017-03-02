@@ -255,4 +255,5 @@ this.$eventBus.$on(...);
 
 ## TODO
 [ ] js 从vue分离出来，eslint 的 preLoader 不起作用，不从vue分离出来，IDE的eslint不起作用
+[ ] 底层ajax请求改为vue官方推荐的[axios](https://github.com/mzabriskie/axios)
  
