@@ -2,7 +2,7 @@
     <div>
         <h1>Home</h1>
         <p>{{msg}}</p>
-        <div style="width: 100px; height: 50px; background: red;" @click="testEmit"></div>
+        <div class="text" @click="testEmit"></div>
         <router-link to="/hello">hello</router-link>
         <router-link to="/login">login</router-link>
     </div>
