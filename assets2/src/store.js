@@ -21,8 +21,7 @@ const syncStateOptions = {
 };
 const handleErrorOptions = {
     errorCallBack(message) {
-        // TODO 修改提示信息
-        alert(message);
+        new Vue().$message.error(message);
     },
 };
 const handlePendingOptions = {

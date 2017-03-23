@@ -7,6 +7,7 @@
         <button @click="changeMessage(0)">改变信息11</button>
         <button @click="changeMessage(1)">改变信息22</button>
         <button @click="showADiv">显示一个动态添加的div</button>
+        <div style="width: 3000px; height: 200px; background: red;"></div>
         <ul>
             <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
             <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>

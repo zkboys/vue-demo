@@ -1,5 +1,6 @@
 // app
 export const SYNC_STATE_FROM_STORAGE = 'SYNC_STATE_FROM_STORAGE';
+export const GET_SYSTEM_MENUS = 'GET_SYSTEM_MENUS';
 
 // hello
 export const GET_USER = 'GET_USER';

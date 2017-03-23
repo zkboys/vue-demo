@@ -19,6 +19,7 @@ export default {
         },
     },
     state: {
+        systemMenus: [],
         message: '初始化message',
         pending: false,
         a: 'a',
@@ -59,6 +60,24 @@ export default {
             });
             return result;
         }),
+        getSystemMenus: createAction(types.GET_SYSTEM_MENUS, () => {
+            // TODO 请求后端真实数据
+            return [
+                {
+                    key: '/hello',
+                    text: '哈喽',
+                    icon: 'el-icon-message',
+                    // type: 'group', // group submenu 默认 submenu
+                    children: [
+                        {
+                            key: '/',
+                            text: 'home',
+                            icon: 'el-icon-home',
+                        },
+                    ],
+                },
+            ];
+        })
     },
     mutations: {
         [types.CHANGE_HELLO_MESSAGE]: handleMutation({
@@ -79,6 +98,10 @@ export default {
                 state.pending = false;
             },
         }),
+        [types.GET_SYSTEM_MENUS](state, action){
+            const {payload} = action;
+            state.systemMenus = payload;
+        },
         [types.SYNC_STATE_FROM_STORAGE](state, action) {
             const {payload} = action;
             state.message = payload.hello && payload.hello.message;
