@@ -22,6 +22,12 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
 
+// 设置皮肤
+require('./theme');
+
+// 生成路由
+require('./generate-routes.js');
+
 var app = express()
 var compiler = webpack(webpackConfig)
 

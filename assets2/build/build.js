@@ -13,6 +13,12 @@ var webpackConfig = require('./webpack.prod.conf')
 var spinner = ora('building for production...')
 spinner.start()
 
+// 设置皮肤
+require('./theme');
+
+// 生成路由
+require('./generate-routes.js');
+
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) throw err
   webpack(webpackConfig, function (err, stats) {
