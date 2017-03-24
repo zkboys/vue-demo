@@ -1,0 +1,45 @@
+@import '../../themes/current/variables.less';
+
+#head {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: @page-head-height;
+  line-height: @page-head-height;
+  background: @color-primary-darker;
+  .logo {
+    float: left;
+    margin: 10px 16px 0 16px;
+    height: 40px;
+  }
+  .title {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+    font-weight: normal;
+  }
+  .head-right {
+    float: right;
+    .menu {
+      float: left;
+      color: #fff;
+      cursor: pointer;
+      padding: 0 16px;
+      font-size: 14px;
+      &:hover {
+        background: rgba(0, 0, 0, 0.5);
+      }
+    }
+    .user-avatar {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 30px;
+    }
+  }
+}

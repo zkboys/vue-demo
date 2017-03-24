@@ -1,29 +1,19 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import routes from './all-routes';
 import store from './store';
 import 'normalize.css';
 import './main.less';
-import Pagehead from './components/page-head/index.vue';
-import Pagenav from './components/page-nav/index.vue';
-import Error404 from './pages/error404';
-
+import FrameHead from './components/frame-head/index.vue';
+import Navigation from './components/navigation/script.jsx';
+import router from './router';
 
 Vue.use(ElementUI);
 // This installs <router-view> and <router-link>,
 // and injects $router and $route to all router-enabled child components
-Vue.use(VueRouter);
 
-// 前端路由最终未捕获的，显示404页面
-routes.push({path: '**', component: Error404});
-const router = new VueRouter({
-    mode: 'history',
-    routes,
-});
 
 NProgress.configure({showSpinner: false});
 
@@ -37,13 +27,13 @@ new Vue({
     router,
     store,
     components: {
-        'page-head': Pagehead,
-        'page-nav': Pagenav,
+        FrameHead,
+        Navigation,
     },
     template: `
         <div id="main-frame">
-            <page-head></page-head>
-            <page-nav></page-nav>
+            <FrameHead></FrameHead>
+            <Navigation></Navigation>
             <section id="page-container">
                 <router-view class="main-view"></router-view>
             </section>
@@ -51,5 +41,9 @@ new Vue({
     `,
     created() {
         this.$store.dispatch('syncStateFromLocalStorage');
+        this.$eventBus.$on('router.afterEach', (route) => {
+            const path = route.path;
+            this.$store.dispatch('setActiveSystemMenu', path);
+        });
     },
 }).$mount('#app');

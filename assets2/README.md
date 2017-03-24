@@ -136,6 +136,11 @@ this.$eventBus.$emit(...);
 this.$eventBus.$on(...);
 ```
 
+## 字体图标 icon-font
+- element自带图标
+- 开源库[iconfont](http://www.iconfont.cn/)、[icomoon](https://icomoon.io/)、[font-awesome](http://fontawesome.io/)
+- 设计利用[iconfont](http://www.iconfont.cn/)定制
+
 ## 问题
 - 是否启用eslint
 - element是否按需加载

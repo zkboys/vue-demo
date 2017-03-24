@@ -20,6 +20,7 @@ export default {
     },
     state: {
         systemMenus: [],
+        activeSystemMenu: '',
         message: '初始化message',
         pending: false,
         a: 'a',
@@ -61,23 +62,55 @@ export default {
             return result;
         }),
         getSystemMenus: createAction(types.GET_SYSTEM_MENUS, () => {
-            // TODO 请求后端真实数据
+            // TODO 请求后端真实数据，如果是扁平化数据，这里转成如下结构数据
             return [
                 {
-                    key: '/hello',
+                    path: '/nothing',
                     text: '哈喽',
                     icon: 'el-icon-message',
                     // type: 'group', // group submenu 默认 submenu
                     children: [
                         {
-                            key: '/',
+                            path: '/',
                             text: 'home',
-                            icon: 'el-icon-home',
+                            icon: 'el-icon-star-on',
                         },
+                        {
+                            path: '/hello',
+                            text: 'hello',
+                            icon: 'el-icon-setting',
+                        },
+                        {
+                            path: '/login',
+                            text: '登录',
+                            icon: 'el-icon-time'
+                        },
+                        {
+                            path: '/a',
+                            text: '分组名称',
+                            icon: 'el-icon-picture',
+                            type: 'group',
+                            children: [
+                                {
+                                    path: '/aa',
+                                    text: '分组一',
+                                },
+                                {
+                                    path: '/aaa',
+                                    text: '分组二',
+                                }
+                            ],
+
+                        }
                     ],
                 },
+                {
+                    path: '/nothing',
+                    text: '人员管理'
+                }
             ];
-        })
+        }),
+        setActiveSystemMenu: createAction(types.SET_ACTIVE_SYSTEM_MENU),
     },
     mutations: {
         [types.CHANGE_HELLO_MESSAGE]: handleMutation({
@@ -101,6 +134,10 @@ export default {
         [types.GET_SYSTEM_MENUS](state, action){
             const {payload} = action;
             state.systemMenus = payload;
+        },
+        [types.SET_ACTIVE_SYSTEM_MENU](state, action){
+            const {payload} = action;
+            state.activeSystemMenu = payload;
         },
         [types.SYNC_STATE_FROM_STORAGE](state, action) {
             const {payload} = action;

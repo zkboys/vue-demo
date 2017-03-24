@@ -38,5 +38,22 @@ export function css(el, cssName, value) {
     if (arguments.length === 3) {
         el.style[cssName] = value;
     }
+}
 
+export function addListener(el, type, listener, useCapture) {
+    if (window.addEventListener) {
+        el.addEventListener(type, listener, useCapture);
+        return listener;
+    }
+    if (window.attachEvent) {
+        // 标准化this，event，target
+        const wrapper = function () {
+            const event = window.event;
+            // noinspection JSAnnotator
+            event.target = event.srcElement;
+            listener.call(el, event);
+        };
+        el.attachEvent('on' + type, wrapper);
+        return wrapper;
+    }
 }
