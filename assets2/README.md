@@ -69,7 +69,7 @@ v6.10.0
 ```
 
 ## npm or cnpm 使用
-cnpm用法类似npm（将npm替换成cnpm即可）,cnpm使用的是国内（淘宝）镜像，不需要翻墙，安装速度较快。
+cnpm用法类似npm（将npm替换成cnpm即可）,cnpm使用的是国内（淘宝）镜像，不需要翻墙，安装速度较快，选择使用一个依赖，需要与团队讨论，是否需要引入，不要随意引入依赖。
 
 ```
 # 安装所有依赖
@@ -83,11 +83,97 @@ $ npm -h
 ```
 参数说明：--save修改package.json中 dependencies属性（生产环境依赖）， --save-dev将修改package.json中devDependencies属性（开发依赖），安装新的依赖，一定要指定--save 或者 --save-dev参数，否则其他人安装所有依赖时，将会缺少某个依赖
 
-## 页面
+## 项目结构
+前端项目各个文件说明如下：
+```
 
-### 头部
-- 头部固定
-- 头部导航
+```
+
+## 代码规范
+前端代码规范通过[eslint](http://eslint.org/)工具进行强制规范，目前使用的是[javascript-standard-style](https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style)
+
+### IDE 插件配置
+使用IDE插件，IDE可以基于[eslint](http://eslint.org/)给予友好的规范错误提示，[WebStorm](https://www.jetbrains.com/webstorm/)（IntelliJ系列IDE）具体配置如下：
+```
+File -> Default Settings -> 输入框输入 'eslint'
+
+Node interpreter 系统中node安装目录
+ESLint package  当前项目安装的eslint目录
+Configuration file 当前项目中 .eslintrc.js 文件路径
+```
+具体配置参考如下：
+
+![配置图](http://www.zkboys.com/2016/03/24/%E5%89%8D%E7%AB%AF%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/idea-eslint-config.png)
+
+## 路由写法
+前端路由，使用的是[vue-router](http://router.vuejs.org/)，
+规模比较大的项目，如果路由都写到一个文件中，会比较乱，多人协作开发也经常会产生版本冲突，将路由文件分散到各个模块下，会避免这些问题。
+各个模块下的路由，写在各自模块下，以`routes.js`文件命名；
+构建时，会通过`build/generate-routes.js` 自动生成`src/all-routes.js`文件；
+并使用`build/routes-loader.js` 简化异步组件（各个页面的js会按需加载）写法：
+```
+/*
+ * 自定义路由loader
+ * asyncComponent: './index.vue',
+ * ===>
+ * component: (resolve) => {
+ *      require.ensure([], () => {
+ *          resolve(require('./index.vue'));
+ *      });
+ * },
+ * */
+```
+
+## axios封装
+
+## [vuex](https://vuex.vuejs.org/)封装
+
+### 异步请求
+#### 写法
+#### loading提示
+#### error提示
+#### success提示
+
+### 本地存储封装
+
+## 关于左侧菜单
+
+## 关于页面头部
+
+### 标题
+
+### 面包屑导航
+
+
+
+## 系统事件总线
+vuex解决了跨组件传递数据问题，跨组件事件可以通过全局的事件总线来决绝。
+```js
+// 非父子关系组件间通信
+var bus = new Vue()
+// in component A's method
+bus.$emit('id-selected', 1)
+// in component B's created hook
+bus.$on('id-selected', function (id) {
+  // ...
+})
+
+// 项目中使用mixins方式，全局给vue添加了data  eventBus，使用方法如下：
+this.$eventBus.$emit(...);
+this.$eventBus.$on(...);
+```
+
+
+## 字体图标 icon-font
+管理系统会用大量的小图标，比如删除、添加、菜单图标等等，推荐使用icon-font，系统提供了element自带图标、[font-awesome](http://fontawesome.io/)的封装。
+
+其他方法：（系统暂未提供）
+
+- 开源库[iconfont](http://www.iconfont.cn/)、[icomoon](https://icomoon.io/)
+- 设计利用[iconfont](http://www.iconfont.cn/)定制
+
+
+## 页面
 
 ### 具体页面头部
 - 固定、滚动两种方式，可配置
@@ -119,27 +205,6 @@ $ npm -h
 - 路由使用history方式，菜单 & 面包屑 根据href自动判定
 - 多次点击菜单，异步加载页面js，防止串页封装
 
-## 系统事件总线
-vuex解决了跨组件传递数据问题，跨组件事件可以通过全局的事件总线来决绝。
-```js
-// 非父子关系组件间通信
-var bus = new Vue()
-// in component A's method
-bus.$emit('id-selected', 1)
-// in component B's created hook
-bus.$on('id-selected', function (id) {
-  // ...
-})
-
-// 项目中使用mixins方式，全局给vue添加了data  eventBus，使用方法如下：
-this.$eventBus.$emit(...);
-this.$eventBus.$on(...);
-```
-
-## 字体图标 icon-font
-- element自带图标
-- 开源库[iconfont](http://www.iconfont.cn/)、[icomoon](https://icomoon.io/)、[font-awesome](http://fontawesome.io/)
-- 设计利用[iconfont](http://www.iconfont.cn/)定制
 
 ## 问题
 - 是否启用eslint

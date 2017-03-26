@@ -4,7 +4,7 @@ import axios from 'axios';
 import config from '../../config';
 
 const urlPrefix = config.apiPath;
-const debug = process.env.NODE_ENV !== 'production';
+// const debug = process.env.NODE_ENV !== 'production';
 
 // axios配置
 axios.defaults.timeout = 5000;
@@ -56,9 +56,6 @@ function fetch(url, params, method = 'get') {
 }
 
 export function get(url, params) {
-    if (debug) {
-        options.credentials = 'same-origin';// 携带cookie，否则前后端分离开发，无法请求后端数据。
-    }
     return fetch(url, params, 'get');
 }
 

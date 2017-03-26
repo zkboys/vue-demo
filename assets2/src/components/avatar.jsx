@@ -8,7 +8,7 @@ export default Vue.component('page-head', {
         },
         user: {
             type: Object,
-            default(){
+            default() {
                 return {
                     name: '匿名用户',
                     loginname: null,
@@ -48,7 +48,7 @@ export default Vue.component('page-head', {
             return <span class={className} style={{backgroundColor}}>{userName[0]}</span>;
         }
     },
-    render(h){
+    render(h) {
         return this.getCurrentLoginUserAvatar();
     },
-})
+});

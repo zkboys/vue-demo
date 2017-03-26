@@ -16,7 +16,7 @@ export default {
         };
     },
     methods: {
-        handleLogout(){
+        handleLogout() {
             this.showLogoutPopover = false;
             // TODO 需要完善退出登录逻辑
             alert('需要完善退出登录逻辑');

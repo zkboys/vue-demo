@@ -20,7 +20,9 @@ export default {
     },
     state: {
         systemMenus: [],
-        activeSystemMenu: '',
+        activeSystemMenuIndex: '',
+        pageTitle: '',
+        breadcrumb: [],
         message: '初始化message',
         pending: false,
         a: 'a',
@@ -63,6 +65,7 @@ export default {
         }),
         getSystemMenus: createAction(types.GET_SYSTEM_MENUS, () => {
             // TODO 请求后端真实数据，如果是扁平化数据，这里转成如下结构数据
+            // TODO 如果path为null，初始化为/nothing
             return [
                 {
                     path: '/nothing',
@@ -86,7 +89,7 @@ export default {
                             icon: 'el-icon-time'
                         },
                         {
-                            path: '/a',
+                            path: '/nothing',
                             text: '分组名称',
                             icon: 'el-icon-picture',
                             type: 'group',
@@ -110,7 +113,9 @@ export default {
                 }
             ];
         }),
-        setActiveSystemMenu: createAction(types.SET_ACTIVE_SYSTEM_MENU),
+        setActiveSystemMenuIndex: createAction(types.SET_ACTIVE_SYSTEM_MENU_INDEX),
+        setBreadcrumb: createAction(types.SET_BREADCRUMB),
+        setPageTitle: createAction(types.SET_PAGE_TITLE),
     },
     mutations: {
         [types.CHANGE_HELLO_MESSAGE]: handleMutation({
@@ -131,17 +136,21 @@ export default {
                 state.pending = false;
             },
         }),
-        [types.GET_SYSTEM_MENUS](state, action){
+        [types.GET_SYSTEM_MENUS](state, action) {
             const {payload} = action;
             state.systemMenus = payload;
         },
-        [types.SET_ACTIVE_SYSTEM_MENU](state, action){
-            const {payload} = action;
-            state.activeSystemMenu = payload;
+        [types.SET_ACTIVE_SYSTEM_MENU_INDEX](state, {payload}) {
+            state.activeSystemMenuIndex = payload;
         },
-        [types.SYNC_STATE_FROM_STORAGE](state, action) {
-            const {payload} = action;
+        [types.SYNC_STATE_FROM_STORAGE](state, {payload}) {
             state.message = payload.hello && payload.hello.message;
+        },
+        [types.SET_BREADCRUMB](state, {payload}) {
+            state.breadcrumb = payload;
+        },
+        [types.SET_PAGE_TITLE](state, {payload}) {
+            state.pageTitle = payload;
         },
     },
 };

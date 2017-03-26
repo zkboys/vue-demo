@@ -16,54 +16,6 @@
     </span>
 </template>
 
-<script>
-
-/*
-* 用法：
-*
-<Popover text="您确定要退出登录吗？" @ok="handleLogout">
-    <div class="menu logout">
-        退出登录
-    </div>
-</Popover>
-*
-* */
-
-export default {
-    name: 'popover',
-    props: {
-        placement: {
-            type: String,
-            default: 'bottom'
-        },
-        width: {
-            type: Number,
-            default: 160
-        },
-        text: {
-            type: String,
-            required: true
-        },
-    },
-    data() {
-        return {
-            visible: false,
-        };
-    },
-    methods: {
-        handleOk(){
-            this.visible = false;
-            this.$emit('ok')
-        },
-        handleCancel(){
-            this.visible = false;
-            this.$emit('cancel')
-        }
-    },
-    mounted(){
-    }
-};
-</script>
 <style scoped lang="less">
     @import '../themes/current/variables.less';
 
@@ -84,3 +36,52 @@ export default {
         margin: 0;
     }
 </style>
+
+<script lang="babel">
+
+    /*
+     * 用法：
+     *
+     <Popover text="您确定要退出登录吗？" @ok="handleLogout">
+     <div class="menu logout">
+     退出登录
+     </div>
+     </Popover>
+     *
+     * */
+
+    export default {
+        name: 'popover',
+        props: {
+            placement: {
+                type: String,
+                default: 'bottom'
+            },
+            width: {
+                type: Number,
+                default: 160
+            },
+            text: {
+                type: String,
+                required: true
+            },
+        },
+        data() {
+            return {
+                visible: false,
+            };
+        },
+        methods: {
+            handleOk() {
+                this.visible = false;
+                this.$emit('ok')
+            },
+            handleCancel() {
+                this.visible = false;
+                this.$emit('cancel')
+            }
+        },
+        mounted() {
+        }
+    };
+</script>

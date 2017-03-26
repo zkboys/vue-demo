@@ -5,8 +5,7 @@ export default {
             errorMessage: '404 error',
         };
     },
-    methods: {
-    },
+    methods: {},
     created() {
     },
 };

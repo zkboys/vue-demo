@@ -11,13 +11,13 @@ export default Vue.component('page-head', {
     },
     computed: mapState({
         systemMenus: state => state.app.systemMenus,
-        activeSystemMenu: state => state.app.activeSystemMenu,
+        activeSystemMenuIndex: state => state.app.activeSystemMenuIndex,
     }),
     methods: {
         ...mapActions([
             'getSystemMenus',
         ]),
-        handleSelect(key, keyPath){
+        handleSelect(key, keyPath) {
             console.log(key, keyPath);
         },
         handleOpen(key, keyPath) {
@@ -26,7 +26,7 @@ export default Vue.component('page-head', {
         handleClose(key, keyPath) {
             console.log(key, keyPath);
         },
-        renderMenus(menus){ // 递归算法构建菜单
+        renderMenus(menus) { // 递归算法构建菜单
             return menus.map(menu => {
                 const path = menu.path;
                 const text = menu.text;
@@ -63,14 +63,14 @@ export default Vue.component('page-head', {
     created() {
         this.getSystemMenus();
     },
-    render(h){
+    render(h) {
         const menusJsx = this.renderMenus(this.systemMenus);
         return (
             <nav id="nav" ref="nav">
                 <div class="nav-inner" ref="navInner" style={this.navInnerStyle}>
                     <el-menu
                         router={true}
-                        default-active={this.activeSystemMenu}
+                        default-active={this.activeSystemMenuIndex}
                         on-select={this.handleSelect}
                         on-open={this.handleOpen}
                         on-close={this.handleClose}
@@ -81,7 +81,7 @@ export default Vue.component('page-head', {
             </nav>
         );
     },
-    mounted(){
+    mounted() {
         const navEl = this.$refs.nav;
         const navInnerEl = this.$refs.navInner;
         const oldWidth = parseInt(css(navEl, 'width'));
@@ -91,4 +91,4 @@ export default Vue.component('page-head', {
             this.activeSystemMenu = '/hello';
         }, 2000);
     },
-})
+});

@@ -9,11 +9,11 @@
  * },
  * */
 function getComponentString(componentPath) {
-    return "component: (resolve) => {"
-        + "require.ensure([], () => {"
+    return "component: (resolve) => { "
+        + "require.ensure([], () => { "
         + "resolve(require('" + componentPath + "'));"
-        + "});"
-        + "},";
+        + " });"
+        + " },";
 }
 
 module.exports = function (source, other) {

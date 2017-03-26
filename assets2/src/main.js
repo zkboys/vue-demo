@@ -8,12 +8,13 @@ import 'normalize.css';
 import './main.less';
 import FrameHead from './components/frame-head/index.vue';
 import Navigation from './components/navigation/script.jsx';
+import PageHead from './components/page-head/page-head.jsx';
 import router from './router';
+import {findNode} from './common/util';
 
 Vue.use(ElementUI);
 // This installs <router-view> and <router-link>,
 // and injects $router and $route to all router-enabled child components
-
 
 NProgress.configure({showSpinner: false});
 
@@ -29,21 +30,34 @@ new Vue({
     components: {
         FrameHead,
         Navigation,
+        PageHead,
     },
     template: `
         <div id="main-frame">
             <FrameHead></FrameHead>
             <Navigation></Navigation>
             <section id="page-container">
+                <PageHead></PageHead>
                 <router-view class="main-view"></router-view>
             </section>
         </div>
     `,
-    created() {
+    created () {
         this.$store.dispatch('syncStateFromLocalStorage');
         this.$eventBus.$on('router.afterEach', (route) => {
             const path = route.path;
-            this.$store.dispatch('setActiveSystemMenu', path);
+            const systemMenus = this.$store.state.app.systemMenus;
+
+            this.$store.dispatch('setActiveSystemMenuIndex', path);
+
+            if (systemMenus && systemMenus.length) {
+                const currentMenus = findNode(systemMenus, 'path', path);
+                if (currentMenus && currentMenus.length) {
+                    const currentMenu = currentMenus[currentMenus.length - 1];
+                    this.$store.dispatch('setPageTitle', currentMenu.text);
+                    this.$store.dispatch('setBreadcrumb', currentMenus);
+                }
+            }
         });
     },
 }).$mount('#app');

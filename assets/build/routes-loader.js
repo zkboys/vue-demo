@@ -8,6 +8,7 @@
  *      });
  * },
  * */
+// TODO 添加回调处理异步加载页面loading；页面href与页面js对应关系，防止异步请求页面js窜页问题
 function getComponentString(componentPath) {
     return "component: (resolve) => {"
         + "require.ensure([], () => {"
