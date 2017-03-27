@@ -29,14 +29,15 @@ export default {
             },
             ({id}) => ({
                 id,
-                autoShowError: true,
+                errorTip: '自定义出错信息',
                 autoShowPending: true,
+                successTip: '自定义成功提示！'
             })),
 
         getUser: createAction(types.GET_USER,
             ({id}) => request.post(GET_USER_URL.replace('{id}', id), {name: 111, pass: 111}),
             () => ({
-                autoShowError: true,
+                errorTip: true,
                 autoShowPending: true,
             })
         ),

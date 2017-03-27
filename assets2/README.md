@@ -197,7 +197,7 @@ export const getUser = createAction(types.GET_USER,
 export const getUser = createAction(GET_USER,
     ({id}) => request.post(GET_USER_URL.replace('{id}', id), {name: 111, pass: 111}),
     {
-        autoShowError: true,
+        errorTip: true,
         autoShowPending: true,
     }
 );
@@ -206,8 +206,9 @@ export const getUser = createAction(GET_USER,
 
 ### meta中约定的配置
 
-1. autoShowError: 是否自动显示错误信息，如果不需要，设置为false，通过action的异步回调，自己处理异常， handle-error-plugin.js 中会用到
-1. autoShowPending: 是否自动显示loading，如果不需要，设置为false，通过action回调，自己处理loading， handle-pending-plugin.js 中会用到
+1. errorTip: 默认true，是否自动显示错误信息，设置成字符串，出错时显示此字符串，设置成true，将获取异常信息进行显示。如果不需要，设置为false，通过action的异步回调，自己处理异常。
+1. successTip: 默认true，是否自动显示成功信息，设置成字符串，则成功时显示此字符串，设置成true，显示'操作成功'。如果不需要，设置为false，通过action的异步回调，自己处理异常。
+1. autoShowPending: 默认true，是否自动显示loading，如果不需要，设置为false，通过action回调，自己处理loading， handle-pending-plugin.js 中会用到
 
 调用异步action，回调写法如下：
 
@@ -293,7 +294,7 @@ export default {
 如果需要单独同步具体的state，可以单独触发`syncStateFromLocalStorage`action，详见`/actions/app.js`中的实现
 
 ### 异常处理
-系统通过`src/vuex-additions/handle-error-plugin.js`处理系统异常，可以截获promise异常，主要是异步产生的异常。异步action，通过的meta的autoShowError参数，可以配置是否已启用系统异常提示；
+系统通过`src/vuex-additions/handle-error-plugin.js`处理系统异常，可以截获promise异常，主要是异步产生的异常。异步action，通过的meta的errorTip参数，可以配置是否已启用系统异常提示；
 ajax请求异常，统一在`src/common/request.js`中进行截获，异常数据结构需要与后端进行约定，处理后，以promise方式返回；
 
 ## 系统事件总线
@@ -442,7 +443,7 @@ created() {
 
 ## TODOS
 
-- [] 成功提示 successTip
+- [x] 成功提示 successTip
 - [] 窜页问题
 - [] 查询条件封装
 - [] permission 封装

@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import NProgress from 'nprogress';
 import createLogger from 'vuex/dist/logger';
-import {createSyncState, createHandleError, createHandlePending} from './vuex-additions/index';
+import {createSyncState, createHandleErrorSuccess, createHandlePending} from './vuex-additions/index';
 import modules from './modules';
 import {local} from './common/storage';
 import {LOCAL_KEY_PREFIX} from './constants/constants';
@@ -19,10 +19,13 @@ const syncStateOptions = {
     modules,
     setItem: local.setItem,
 };
-const handleErrorOptions = {
+const handleErrorSuccessOptions = {
     errorCallBack(message) {
         new Vue().$message.error(message);
     },
+    successCallBack(message) {
+        new Vue().$message.success(message);
+    }
 };
 const handlePendingOptions = {
     pendingCallBack() {
@@ -35,7 +38,7 @@ const handlePendingOptions = {
 
 const plugins = [
     createSyncState(syncStateOptions),
-    createHandleError(handleErrorOptions),
+    createHandleErrorSuccess(handleErrorSuccessOptions),
     createHandlePending(handlePendingOptions),
 ];
 if (debug) {
