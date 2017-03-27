@@ -23,6 +23,7 @@
   "devDependencies": {
     "autoprefixer": "^6.7.2",
     "axios": "^0.15.3",
+    "axios-mock-adapter": "^1.8.1",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.2",
@@ -72,6 +73,7 @@
     "less-loader": "^4.0.2",
     "lolex": "^1.5.2",
     "mocha": "^3.2.0",
+    "mockjs": "^1.0.1-beta3",
     "nightwatch": "^0.9.12",
     "nprogress": "^0.2.0",
     "opn": "^4.0.2",

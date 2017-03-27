@@ -12,6 +12,12 @@ import PageHead from './components/page-head/page-head.jsx';
 import router from './router';
 import {findNode} from './common/util';
 import FontIcon from './components/font-icon/index.jsx';
+import QueryBar from './components/query-bar.vue';
+import {debug} from '../config/index.js';
+
+if (debug) {
+    require('./mock/index.js');
+}
 
 Vue.use(ElementUI);
 // This installs <router-view> and <router-link>,
@@ -51,6 +57,7 @@ Vue.prototype.$setActiveSystemMenu = function (path) {
 
 // 字体图标全局组件
 Vue.component('FontIcon', FontIcon);
+Vue.component('QueryBar', QueryBar);
 
 new Vue({
     router,

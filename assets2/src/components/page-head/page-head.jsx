@@ -26,7 +26,7 @@ export default Vue.component('page-head', {
                     const icon = b.icon;
                     const text = b.text;
                     const iconJsx = icon ? <FontIcon className="icon" name={icon}/> : null;
-                    if (path && !b.isMenuItem) {
+                    if (path && b.isMenuItem) {
                         return (
                             <el-breadcrumb-item to={{path}}>
                                 {iconJsx}

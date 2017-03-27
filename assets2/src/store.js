@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import NProgress from 'nprogress';
 import createLogger from 'vuex/dist/logger';
 import {createSyncState, createHandleErrorSuccess, createHandlePending} from './vuex-additions/index';
+import {debug} from '../config/index.js';
 import modules from './modules';
 import {local} from './common/storage';
 import {LOCAL_KEY_PREFIX} from './constants/constants';
@@ -12,7 +13,6 @@ import {
 
 Vue.use(Vuex);
 
-const debug = process.env.NODE_ENV !== 'production';
 const syncStateOptions = {
     syncAction: SYNC_STATE_FROM_STORAGE,
     keyPrefix: LOCAL_KEY_PREFIX,

@@ -10,3 +10,6 @@ export const SHOW_PAGE_HEAD = 'SHOW_PAGE_HEAD';
 // hello
 export const GET_USER = 'GET_USER';
 export const CHANGE_HELLO_MESSAGE = 'CHANGE_HELLO_MESSAGE';
+
+// user
+export const GET_USERS_BY_PAGE = 'GET_USERS_BY_PAGE';

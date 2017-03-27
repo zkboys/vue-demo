@@ -1,10 +1,11 @@
 @import './themes/current/variables.less';
-body{
+
+body {
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-#page-container{
+#page-container {
   position: absolute;
   top: @page-head-height;
   right: 0;
@@ -13,4 +14,7 @@ body{
   overflow-y: auto;
   overflow-x: hidden;
   padding: 16px;
+  .main-view {
+    padding-top: 16px;
+  }
 }
