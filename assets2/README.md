@@ -315,9 +315,31 @@ this.$eventBus.$on(...);
 ```
 
 ## 字体图标 icon-font
-管理系统会用大量的小图标，比如删除、添加、菜单图标等等，推荐使用icon-font，系统提供了element自带图标、[font-awesome](http://fontawesome.io/)的封装。
+管理系统会用大量的小图标，比如删除、添加、菜单图标等等，推荐使用icon-font，系统提供了element自带图标、[font-awesome](http://fontawesome.io/)的封装，使用方法如下：
+```html
+/*
+* FontIcon以作为全局组件载入，直接使用即可
+*
+* name: String；required；fontawesome 或者是 element，内部封装会自动区分
+* className: String；自定义class
+* size: String；图标大小，lg 2x 3x 4x 5x，默认为空
+*/
 
-其他方法：（系统暂未提供）
+<FontIcon className="my-class" name="fa-camera-retro"/>
+<FontIcon name="fa-camera-retro" size="lg"/>
+<FontIcon name="fa-camera-retro" size="2x"/>
+<FontIcon name="fa-camera-retro" size="3x"/>
+<FontIcon name="fa-camera-retro" size="4x"/>
+<FontIcon name="fa-camera-retro" size="5x"/>
+
+<FontIcon name="el-icon-edit"/>
+<FontIcon name="el-icon-edit" size="lg"/>
+<FontIcon name="el-icon-edit" size="2x"/>
+<FontIcon name="el-icon-edit" size="3x"/>
+<FontIcon name="el-icon-edit" size="4x"/>
+<FontIcon name="el-icon-edit" size="5x"/>
+```
+其他方法：（系统暂未提供，如有需要可以封装）
 
 - 开源库[iconfont](http://www.iconfont.cn/)、[icomoon](https://icomoon.io/)
 - 设计利用[iconfont](http://www.iconfont.cn/)定制

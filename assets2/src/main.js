@@ -11,6 +11,7 @@ import Navigation from './components/navigation/script.jsx';
 import PageHead from './components/page-head/page-head.jsx';
 import router from './router';
 import {findNode} from './common/util';
+import FontIcon from './components/font-icon/index.jsx';
 
 Vue.use(ElementUI);
 // This installs <router-view> and <router-link>,
@@ -47,6 +48,9 @@ Vue.prototype.$setActiveSystemMenu = function (path) {
         this.$store.dispatch('setActiveSystemMenuIndex', path);
     })
 };
+
+// 字体图标全局组件
+Vue.component('FontIcon', FontIcon);
 
 new Vue({
     router,
