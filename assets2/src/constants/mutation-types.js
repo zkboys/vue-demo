@@ -4,6 +4,8 @@ export const GET_SYSTEM_MENUS = 'GET_SYSTEM_MENUS';
 export const SET_ACTIVE_SYSTEM_MENU_INDEX = 'SET_ACTIVE_SYSTEM_MENU_INDEX';
 export const SET_BREADCRUMB = 'SET_BREADCRUMB';
 export const SET_PAGE_TITLE = 'SET_PAGE_TITLE';
+export const HIDE_PAGE_HEAD = 'HIDE_PAGE_HEAD';
+export const SHOW_PAGE_HEAD = 'SHOW_PAGE_HEAD';
 
 // hello
 export const GET_USER = 'GET_USER';

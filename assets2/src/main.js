@@ -24,6 +24,30 @@ NProgress.configure({showSpinner: false});
 // this.$eventBus.$on('id-selected', id => console.log(id));
 Vue.prototype.$eventBus = new Vue(); // 直接扩展
 
+// 扩展公共方法
+Vue.prototype.$hidePageHeader = function () {
+    Vue.nextTick(() => {
+        this.$store.dispatch('hidePageHead');
+    })
+};
+Vue.prototype.$setPageTitle = function (title) {
+    Vue.nextTick(() => {
+        this.$store.dispatch('setPageTitle', title);
+    })
+};
+
+Vue.prototype.$setBreadcrumb = function (breadcrumb) {
+    Vue.nextTick(() => {
+        this.$store.dispatch('setBreadcrumb', breadcrumb);
+    })
+};
+
+Vue.prototype.$setActiveSystemMenu = function (path) {
+    Vue.nextTick(() => {
+        this.$store.dispatch('setActiveSystemMenuIndex', path);
+    })
+};
+
 new Vue({
     router,
     store,
@@ -48,8 +72,13 @@ new Vue({
             const path = route.path;
             const systemMenus = this.$store.state.app.systemMenus;
 
+            // 设置系统菜单状态
             this.$store.dispatch('setActiveSystemMenuIndex', path);
 
+            // 默认显示头部
+            this.$store.dispatch('showPageHead');
+
+            // 设置头部信息
             if (systemMenus && systemMenus.length) {
                 const currentMenus = findNode(systemMenus, 'path', path);
                 if (currentMenus && currentMenus.length) {

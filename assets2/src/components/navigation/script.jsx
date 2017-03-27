@@ -28,6 +28,7 @@ export default Vue.component('page-head', {
         },
         renderMenus(menus) { // 递归算法构建菜单
             return menus.map(menu => {
+                menu.path = menu.path || '/nothing';
                 const path = menu.path;
                 const text = menu.text;
                 const icon = menu.icon;

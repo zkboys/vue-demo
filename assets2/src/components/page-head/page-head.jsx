@@ -7,10 +7,12 @@ export default Vue.component('page-head', {
         return {}
     },
     computed: mapState({
+        showPageHead: state => state.app.showPageHead,
         breadcrumb: state => state.app.breadcrumb,
-        pageTitle: state => state.app.pageTitle,
+        pageHead: state => state.app.pageHead,
     }),
     methods: {
+
         renderBreadcrumb() {
             const breadcrumb = this.breadcrumb;
             let items = [];
@@ -40,10 +42,10 @@ export default Vue.component('page-head', {
         },
     },
     render(h) {
-        const pageTitle = this.pageTitle;
+        const pageTitle = this.pageHead;
         console.log(this.breadcrumb);
         return (
-            <div class="page-head">
+            <div class="page-head" v-show={this.showPageHead}>
                 <h1>{pageTitle}</h1>
                 <div class="breadcrumb">
                     <el-breadcrumb separator="/">

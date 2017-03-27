@@ -29,6 +29,8 @@ export default {
             },
             ({id}) => ({
                 id,
+                autoShowError: true,
+                autoShowPending: true,
             })),
 
         getUser: createAction(types.GET_USER,
