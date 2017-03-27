@@ -350,7 +350,7 @@ this.$eventBus.$on(...);
 如果系统菜单跟权限相关，一般需要后端给出菜单；如果不需要权限限制，前端直接在`src/modules/app.js getSystemMenus`方法中定义即可；所需结构如下：
 ```js
 /**
- * path: 页面路径，如果为父节点或者group节点，缺省或者写为/nothing
+ * path: 页面路径，如果为父节点或者group节点，缺省此属性
  * text: 菜单显示名称
  * icon: 菜单图标，可以为空
  * type: 菜单类型，父菜单还是分组菜单，可选值：group submenu 默认或缺省为：submenu
@@ -358,7 +358,6 @@ this.$eventBus.$on(...);
  */
 [
     {
-        // path: '/nothing',
         text: '哈喽',
         icon: 'el-icon-message',
         // type: 'group', // group submenu 默认 submenu
@@ -379,7 +378,6 @@ this.$eventBus.$on(...);
                 icon: 'el-icon-time'
             },
             {
-                path: '/nothing',
                 text: '分组名称',
                 icon: 'el-icon-picture',
                 type: 'group',
@@ -398,7 +396,7 @@ this.$eventBus.$on(...);
         ],
     },
     {
-        path: '/nothing',
+        path: '/user-operator',
         text: '人员管理'
     }
 ]
@@ -466,9 +464,9 @@ created() {
 ## TODOS
 
 - [x] 成功提示 successTip
+- [x] font-icon 封装
 - [] 窜页问题
 - [] 查询条件封装
 - [] permission 封装
 - [] 列表操作列封装
-- [] font-icon 封装
 - [] 多次相同请求，抛弃前面几次，只保留最后一次的相关封装

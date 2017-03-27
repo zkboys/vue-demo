@@ -66,15 +66,25 @@ export default {
         }),
         getSystemMenus: createAction(types.GET_SYSTEM_MENUS, () => {
             // TODO 请求后端真实数据，如果是扁平化数据，这里转成如下结构数据
-            // TODO 如果path为null，初始化为/nothing
             /**
-             * path: 页面路径，如果为父节点或者group节点，缺省或者写为/nothing
+             * path: 页面路径，如果为父节点或者group节点，缺省此属性
              * text: 菜单显示名称
              * icon: 菜单图标，可以为空
              * type: 菜单类型，父菜单还是分组菜单，可选值：group submenu 默认或缺省为：submenu
              * children: 子菜单或者分组菜单项
              */
             return [
+                {
+                    text: '用户管理',
+                    icon: 'fa-user-circle-o',
+                    children: [
+                        {
+                            path: '/users',
+                            text: '用户查询',
+                            icon: 'el-icon-search',
+                        },
+                    ],
+                },
                 {
                     text: '哈喽',
                     icon: 'el-icon-message',
@@ -96,7 +106,6 @@ export default {
                             icon: 'el-icon-time'
                         },
                         {
-                            path: '/nothing',
                             text: '分组名称',
                             icon: 'el-icon-picture',
                             type: 'group',
@@ -115,7 +124,7 @@ export default {
                     ],
                 },
                 {
-                    path: '/nothing',
+                    path: '/user-operator',
                     text: '人员管理'
                 }
             ];

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import './fontawesome/css/font-awesome.css';
 
-export default Vue.component('page-head', {
+export default Vue.component('FontIcon', {
     props: {
         className: {
             type: String,

@@ -1,8 +1,12 @@
 import Vue from 'vue';
 import {mapState} from 'vuex';
 import './style.less';
+import FontIcon from '../font-icon/index.jsx';
 
 export default Vue.component('page-head', {
+    components: {
+        FontIcon,
+    },
     data() {
         return {}
     },
@@ -21,17 +25,18 @@ export default Vue.component('page-head', {
                     const path = b.path;
                     const icon = b.icon;
                     const text = b.text;
-                    if (path && path !== '/nothing') {
+                    const iconJsx = icon ? <FontIcon className="icon" name={icon}/> : null;
+                    if (path && !b.isMenuItem) {
                         return (
                             <el-breadcrumb-item to={{path}}>
-                                {icon ? <i class={`icon ${icon}`}/> : null}
+                                {iconJsx}
                                 {text}
                             </el-breadcrumb-item>
                         );
                     } else {
                         return (
                             <el-breadcrumb-item>
-                                {icon ? <i class={`icon ${icon}`}/> : null}
+                                {iconJsx}
                                 {text}
                             </el-breadcrumb-item>
                         );

@@ -2,8 +2,12 @@ import Vue from 'vue';
 import {getScrollBarWidth, css} from '../../common/util';
 import {mapState, mapActions} from 'vuex';
 import './style.less';
+import FontIcon from '../font-icon/index.jsx';
 
 export default Vue.component('page-head', {
+    components: {
+        FontIcon,
+    },
     data() {
         return {
             navInnerStyle: '',
@@ -27,8 +31,8 @@ export default Vue.component('page-head', {
             console.log(key, keyPath);
         },
         renderMenus(menus) { // 递归算法构建菜单
-            return menus.map(menu => {
-                menu.path = menu.path || '/nothing';
+            return menus.map((menu, index) => {
+                menu.path = menu.path || `${index}`;
                 const path = menu.path;
                 const text = menu.text;
                 const icon = menu.icon;
@@ -38,7 +42,9 @@ export default Vue.component('page-head', {
                 const isGroup = type === 'group' && children;
                 const isSubmenu = !isGroup && children;
                 const isMenuItem = !children;
-                const iconJsx = icon ? <i class={icon}/> : null;
+                const iconJsx = icon ? <FontIcon name={icon}/> : null;
+                menu.isMenuItem = isMenuItem;
+
                 if (isMenuItem) {
                     return <el-menu-item index={path}>{iconJsx}{text}</el-menu-item>;
                 }
