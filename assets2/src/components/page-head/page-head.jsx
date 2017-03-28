@@ -48,7 +48,6 @@ export default Vue.component('page-head', {
     },
     render(h) {
         const pageTitle = this.pageHead;
-        console.log(this.breadcrumb);
         return (
             <div class="page-head" v-show={this.showPageHead}>
                 <h1>{pageTitle}</h1>

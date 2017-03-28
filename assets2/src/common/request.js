@@ -40,7 +40,6 @@ axios.interceptors.response.use(function (response) {
  */
 function fetch(url, params, method = 'get') {
     url = urlPrefix + url;
-    console.log(url, params, method);
     return new Promise((resolve, reject) => {
         axios({
             method: method,
